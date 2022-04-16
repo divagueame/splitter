@@ -1,26 +1,79 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<div class="container">
+  <h1>Splitter </h1>
+<CreateTracking />
+  <div class="none">
+
+    <div>Splits 30'</div>
+    <div class="flex">
+      <div>
+        <input type="checkbox" name="splits">
+        <label for="splits"></label>
+      </div>
+      <div>
+        <input type="checkbox" name="splits">
+        <label for="splits"></label>
+      </div>
+      <div>
+        <input type="checkbox" name="splits">
+        <label for="splits"></label>
+      </div>
+      
+
+    </div>
+    
+  </div>
+</div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script> 
 
+import CreateTracking from './components/CreateTracking.vue'
 export default {
-  name: 'App',
+  beforeMount(){
+    console.log(this,'Before')
+
+  },
+  created(){
+    console.log(this,'Created')
+  }
+  ,mounted(){
+    console.log(this,'mounted')
+    setTimeout(() => {
+      this.$store.commit('add')
+      
+  
+    }, 2000);
+  },
+  name: 'App', 
   components: {
-    HelloWorld
+    CreateTracking
+},
+  computed: {
+    chiki() {
+      return this.$store.state.chiki
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import url('https://fonts.googleapis.com/css2?family=Anek+Odia:wght@100;500;800&display=swap');
+
+* {
+  font-family: 'Anek Odia', sans-serif;
+}
+body {
+  margin: 0;
+}
+.container {
+  outline: 2px solid rgb(255, 104, 104);
+  padding: 1rem;
+  /* width: 100%; */
+  max-width: 100%;
+}
+.flex {
+  display: flex;
+
 }
 </style>
