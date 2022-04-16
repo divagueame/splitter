@@ -1,8 +1,11 @@
 <template>
-<div class="container">
-  <h1>Splitter </h1>
+<div>
+<div class="line"></div>
+
+
 <CreateTracking />
-  <div class="none">
+<div class="line"></div>
+  <div class="hidden">
 
     <div>Splits 30'</div>
     <div class="flex">
@@ -66,14 +69,9 @@ export default {
 body {
   margin: 0;
 }
-.container {
-  outline: 2px solid rgb(255, 104, 104);
-  padding: 1rem;
-  /* width: 100%; */
-  max-width: 100%;
+.line {
+  height: 2px;
+  background-color: rgb(255, 104, 104);;
 }
-.flex {
-  display: flex;
 
-}
 </style>
