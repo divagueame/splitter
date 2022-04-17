@@ -1,6 +1,6 @@
 <template>
-  <div class="container mx-auto px-72">
-    <h1 class="">Create!</h1>
+  <div class="container mx-auto px-72 bg-blue-100 dark:bg-blue-800">
+    <h1 class="" @click="toggleDarkMode">Create!</h1>
     <form action="" class="p-2">
       <!-- Name -->
       <div>
@@ -24,7 +24,7 @@
 
       <div v-show="targetIsTime">
         Time Selected 
-        <input type="number" v-model="targetMinutesTime" name="targetMinutesTime">:
+        <input type="number" v-model="targetMinutesTime" name="targetMinutesTime"  @change="parseMinutes">:
         <input type="number" v-model="targetSecondsTime" name="targetSecondsTime" @change="parseSeconds">
       </div>
       <div> 
@@ -32,31 +32,50 @@
         <input type="number" v-model="targetSets" name="sets">
       </div>
       <div class="line"></div>
-      <!-- Desired Frequency -->
-      <div class="bg-blue-200 flex rounded-sm my-2">
-        <div>
-          <label for="daily">Daily</label>
-          <input type="radio" name="freq" checked id="">
-        </div>
-        <div>
-          <label for="weekly">Weekly</label>
-          <input type="radio" name="freq" id="">
-        </div>
-        <div>
-          <label for="monthly">Monthly</label>
-          <input type="radio" name="freq" id="">
-        </div>
-        <div>
-          <label for="yearly">Yearly</label>
-          <input type="radio" name="freq" id="">
-        </div>
-
+      
+      <!-- Frecuency -->
+      
+      
+      <!-- Monday -->
+      <div>
+        <input type="checkbox" id="checkmonday" v-model="monday">
+        <label for="checkmonday">Monday</label>
+      </div>
+      <!-- Tuesday -->
+      <div>
+        <input type="checkbox" id="checktuesday" v-model="tuesday">
+        <label for="checktuesday">Tuesday</label>
+      </div>
+      <!-- Wednesday -->
+      <div>
+        <input type="checkbox" id="checkwednesday" v-model="wednesday">
+        <label for="checkwednesday">Wednesday</label>
+      </div>
+      <!-- Thursday -->
+      <div>
+        <input type="checkbox" id="checkthursday" v-model="thursday">
+        <label for="checkthursday">Thursday</label>
+      </div>
+      <!-- Friday -->
+      <div>
+        <input type="checkbox" id="checkfriday" v-model="friday">
+        <label for="checkfriday">Friday</label>
+      </div>
+      <!-- Saturday -->
+      <div>
+        <input type="checkbox" id="checksaturday" v-model="saturday">
+        <label for="checksaturday">Saturday</label>f
+      </div>
+      <!-- Sunday -->
+      <div>
+        <input type="checkbox" id="checksunday" v-model="sunday">
+        <label for="checksunday">Sunday</label>
       </div>
 
       <button class="px-2 py-1 rounded-sm my-2 bg-blue-600">Create</button>
     <!-- Submit -->
     </form>
-
+ {{ this.selectedDays }}
 
     <!-- Information Card -->
     <div class="bg-blue-700 text-white p-2">
@@ -96,11 +115,21 @@ export default {
       targetMinutesTime: 0,
       targetSecondsTime: 30,
       targetSets: 3,
-      targetReps: 20
+      targetReps: 20,
+      monday: false,
+      tuesday: false,
+      wednesday: false,
+      thursday: false,
+      friday: false,
+      saturday: false,
+      sunday: false,
     }
   },
   
   methods: {
+    toggleDarkMode(){
+      console.log('Togle')
+    },
     parseSeconds(){
       if(this.targetSecondsTime==60){
         this.targetSecondsTime = 0;
@@ -112,6 +141,14 @@ export default {
       }
       if((this.targetSecondsTime == -1) &&(this.targetMinutesTime == 0 )){
         this.targetSecondsTime = 0;
+      }
+    },
+    parseMinutes(e){
+      if(e.target.value < 0){
+        this.targetMinutesTime = 0;
+      }
+      if((e.target.value > 59 )){
+        this.targetMinutesTime == 59
       }
     }
   },
@@ -128,11 +165,13 @@ export default {
       measuredTime.setSeconds(secs);
       measuredTime = measuredTime.toISOString().substr(11, 8); // specify value of SECONDS
       return measuredTime
-      // return measuredTime.toISOString().substr(11, 8);
-      
     }
   }
 }
+
+
+
+
 </script>
 
 <style>
