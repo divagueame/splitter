@@ -23,10 +23,11 @@
       </div>
 
       <div v-show="targetIsTime">
-        Time Selected
-        <input type="time" v-model="targetTime" name="time">
+        Time Selected 
+        <input type="number" v-model="targetMinutesTime" name="targetMinutesTime">:
+        <input type="number" v-model="targetSecondsTime" name="targetSecondsTime" @change="parseSeconds">
       </div>
-      <div>
+      <div> 
         Sets:
         <input type="number" v-model="targetSets" name="sets">
       </div>
@@ -61,7 +62,7 @@
     <div class="bg-blue-700 text-white p-2">
       <div>
         Target Time:
-        {{ targetTime }}
+        {{ this.targetMinutesTime }} : {{ this.targetSecondsTime }}
       </div>
       <div>
         Target Sets:
@@ -91,10 +92,27 @@ export default {
   name: 'createTracking',
   data() {
     return {
-      targetIsTime: true,
-      targetTime: 60,
+      targetIsTime: true, 
+      targetMinutesTime: 0,
+      targetSecondsTime: 30,
       targetSets: 3,
       targetReps: 20
+    }
+  },
+  
+  methods: {
+    parseSeconds(){
+      if(this.targetSecondsTime==60){
+        this.targetSecondsTime = 0;
+        this.targetMinutesTime += 1;
+      }
+      if((this.targetSecondsTime == -1) &&(this.targetMinutesTime > 0 )){
+        this.targetSecondsTime = 59;
+        this.targetMinutesTime -= 1;
+      }
+      if((this.targetSecondsTime == -1) &&(this.targetMinutesTime == 0 )){
+        this.targetSecondsTime = 0;
+      }
     }
   },
   computed: {
@@ -102,11 +120,11 @@ export default {
       return this.targetSets * this.targetReps
     },
     totalTime(){
-      return this.targetSets * this.targetTime
+      return this.targetSets * ((60 * this.targetMinutesTime) + this.targetSecondsTime)
     },
     parsedTotalTime(){
       var measuredTime = new Date(null);
-      let secs = this.targetSets * this.targetTime;
+      let secs = this.targetSets * ((60 * this.targetMinutesTime) + this.targetSecondsTime);
       measuredTime.setSeconds(secs);
       measuredTime = measuredTime.toISOString().substr(11, 8); // specify value of SECONDS
       return measuredTime
