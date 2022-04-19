@@ -1,7 +1,8 @@
 <template>
   <div class="container mx-auto px-72 bg-blue-100 dark:bg-blue-800">
     <h1 class="" @click="toggleDarkMode">Create!</h1>
-    <form action="" class="p-2">
+    <form action="" class="p-2 my-8">
+      <div class="line"></div>
       <!-- Name -->
       <div>
         <label for="name">Name</label>
@@ -33,45 +34,18 @@
       </div>
       <div class="line"></div>
       
-      <!-- Frecuency -->
+      <!-- Select Days -->
+      <div class="p-2 flex gap-2">
+        <div v-for="(day, i) in days">
+          <div class="p-1">
+            <input type="checkbox" v-bind:id="'dayValue'+ i" v-model="daysValues[i]">
+            <label v-bind:for="'dayValue'+ i" >{{ day }}</label>
+          </div>
+        </div> 
+      </div>
       
       
-      <!-- Monday -->
-      <div>
-        <input type="checkbox" id="checkmonday" v-model="monday">
-        <label for="checkmonday">Monday</label>
-      </div>
-      <!-- Tuesday -->
-      <div>
-        <input type="checkbox" id="checktuesday" v-model="tuesday">
-        <label for="checktuesday">Tuesday</label>
-      </div>
-      <!-- Wednesday -->
-      <div>
-        <input type="checkbox" id="checkwednesday" v-model="wednesday">
-        <label for="checkwednesday">Wednesday</label>
-      </div>
-      <!-- Thursday -->
-      <div>
-        <input type="checkbox" id="checkthursday" v-model="thursday">
-        <label for="checkthursday">Thursday</label>
-      </div>
-      <!-- Friday -->
-      <div>
-        <input type="checkbox" id="checkfriday" v-model="friday">
-        <label for="checkfriday">Friday</label>
-      </div>
-      <!-- Saturday -->
-      <div>
-        <input type="checkbox" id="checksaturday" v-model="saturday">
-        <label for="checksaturday">Saturday</label>f
-      </div>
-      <!-- Sunday -->
-      <div>
-        <input type="checkbox" id="checksunday" v-model="sunday">
-        <label for="checksunday">Sunday</label>
-      </div>
-
+      
       <button class="px-2 py-1 rounded-sm my-2 bg-blue-600">Create</button>
     <!-- Submit -->
     </form>
@@ -79,6 +53,11 @@
 
     <!-- Information Card -->
     <div class="bg-blue-700 text-white p-2">
+      <div class="flex gap-2">
+        <div class="" v-for="day in totalDays">
+          {{ day }}
+        </div>
+      </div>
       <div>
         Target Time:
         {{ this.targetMinutesTime }} : {{ this.targetSecondsTime }}
@@ -116,13 +95,8 @@ export default {
       targetSecondsTime: 30,
       targetSets: 3,
       targetReps: 20,
-      monday: false,
-      tuesday: false,
-      wednesday: false,
-      thursday: false,
-      friday: false,
-      saturday: false,
-      sunday: false,
+      days: ['Monday','Tuesday','Wednesday', 'Thursday','Friday','Saturday','Sunday'],
+      daysValues: [true,true,true,true,true,true,true]
     }
   },
   
@@ -153,6 +127,18 @@ export default {
     }
   },
   computed: {
+    totalDays(){
+      let selectedDays = [];
+      this.daysValues.forEach((dayValue,i) => {
+        if(dayValue==true){
+          selectedDays.push(this.days[i])
+        }
+        
+      });   
+      
+      return selectedDays
+      
+    },
     totalReps(){
       return this.targetSets * this.targetReps
     },
