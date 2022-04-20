@@ -1,60 +1,55 @@
 <template>
-  <div class="container mx-auto px-72 bg-blue-100 dark:bg-blue-800">
+  <div class="container w-full mx-auto px-72 bg-white dark:bg-blue-800">
     <h1 class="" @click="toggleDarkMode">Create!</h1>
-    <form action="" class="p-2 my-8">
-      <div class="line"></div>
+    <form action="" class="w-full p-2 my-8 border-4 border-blue-700 rounded-xl shadow-lg ">
       <!-- Name -->
-      <div>
-        <label for="name">Name</label>
+      <div class="flex">
+        <label for="name" class="w-1/2">Name</label>
         <input class="p-1" type="text" name="name" placeholder="Name your " required key="name">
       </div>
-      <div class="line"></div>
       <!-- Target: Reps / Time -->
       <div class="targetIsTime flex items-center">
-        <div>Reps</div>
+        <div class="">Reps</div>
         <label class="switch mx-2">
           <input type="checkbox" v-model="this.targetIsTime">
           <span class="slider round"></span>
         </label>
         <div class="py-4">Time</div>
       </div>
-      <div v-show="!targetIsTime">
-        Reps Selected
+      <div v-show="!targetIsTime" class="flex gap-2">
+        <div  class="w-1/2">Reps Selected</div>
         <input type="number" v-model="targetReps" name="reps">
       </div>
 
-      <div v-show="targetIsTime">
-        Time Selected 
+      <div v-show="targetIsTime" class="flex gap-2">
+        <div class="w-1/2">Time Selected </div>
         <input type="number" v-model="targetMinutesTime" name="targetMinutesTime"  @change="parseMinutes">:
         <input type="number" v-model="targetSecondsTime" name="targetSecondsTime" @change="parseSeconds">
       </div>
       <div> 
-        Sets:
-        <input type="number" v-model="targetSets" name="sets">
+        <div class="flex gap-2 w-1/2 bg-blue-600 rounded-md p-2">
+          <div class="">Sets:</div>
+          <input type="number" v-model="targetSets" name="sets">
+        </div>
       </div>
-      <div class="line"></div>
       
       <!-- Select Days -->
       <div class="p-2 flex gap-2">
-        <div v-for="(day, i) in days">
+        <div v-for="(day, i) in days" v-bind:key="i">
           <div class="p-1">
             <input type="checkbox" v-bind:id="'dayValue'+ i" v-model="daysValues[i]">
             <label v-bind:for="'dayValue'+ i" >{{ day }}</label>
           </div>
         </div> 
       </div>
-      
-      
-      
-      <button class="px-2 py-1 rounded-sm my-2 bg-blue-600">Create</button>
     <!-- Submit -->
+      <button class="px-2 py-1 rounded-sm my-2 bg-blue-600">Create</button>
     </form>
- {{ this.selectedDays }}
-
+    
     <!-- Information Card -->
     <div class="bg-blue-700 text-white p-2">
       <div class="flex gap-2">
-        <div class="" v-for="day in totalDays">
+        <div class="" v-for="(day,i) in totalDays" v-bind:key="i">
           {{ day }}
         </div>
       </div>
@@ -161,7 +156,12 @@ export default {
 </script>
 
 <style>
-
+input {
+  /* border: 2px solid black */
+  outline: none;
+  border: none;
+  border-bottom: 1px solid rgb(167, 167, 167);
+}
 
 /* The switch - the box around the slider */
 .switch {

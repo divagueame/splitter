@@ -1,6 +1,6 @@
 <template>
 <div>
-<div class="line"></div>
+<div class="line1"></div>
 
 
 <button
@@ -35,7 +35,7 @@
 </button>
 
 <CreateTracking />
-<div class="line"></div>
+<div class="line1"></div>
   <div class="hidden">
 
     <div>Splits 30'</div>
